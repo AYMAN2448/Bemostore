@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>شحن الرصيد</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>...</header>
+    <main>
+        <h2>شحن الرصيد</h2>
+        <form id="deposit-form">
+            <input type="number" id="amount" placeholder="المبلغ بالدولار" required>
+            <select id="depositMethod">
+                <option value="usdt">USDT (TRC20) – تلقائي</option>
+                <option value="trx">TRX – تلقائي</option>
+                <option value="vodafone">فودافون كاش (يدوي)</option>
+                <option value="bank">تحويل بنكي (يدوي)</option>
+            </select>
+            <div id="receipt-field" style="display:none;">
+                <input type="text" id="receiptUrl" placeholder="رابط صورة الإيصال">
+            </div>
+            <button type="submit">شحن</button>
+        </form>
+        <div id="result"></div>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        const userId = localStorage.getItem('userId');
+        const methodSelect = document.getElementById('depositMethod');
+        const receiptDiv = document.getElementById('receipt-field');
+        methodSelect.addEventListener('change', () => {
+            receiptDiv.style.display = (methodSelect.value === 'vodafone' || methodSelect.value === 'bank') ? 'block' : 'none';
+        });
+        document.getElementById('deposit-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = document.getElementById('amount').value;
+            const paymentMethod = methodSelect.value;
+            const receiptUrl = (paymentMethod !== 'usdt' && paymentMethod !== 'trx') ? document.getElementById('receiptUrl').value : null;
+            const res = await fetch('/api/deposit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, amount, paymentMethod, receiptUrl })
+            });
+            const data = await res.json();
+            if (data.paymentUrl) window.location.href = data.paymentUrl;
+            else document.getElementById('result').innerText = data.message || 'تم الإرسال';
+        });
+    </script>
+</body>
+</html>
