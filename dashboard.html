@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة المستخدم</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>...</header>
+    <main>
+        <h2>مرحباً، <span id="userName"></span></h2>
+        <div class="balance-card">💰 رصيدك: <span id="balance">0</span> دولار</div>
+        <h3>📋 طلباتي</h3>
+        <div id="orders-list"></div>
+        <h3>🔔 التنبيهات</h3>
+        <div id="alerts-list"></div>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        const userId = localStorage.getItem('userId');
+        document.getElementById('userName').innerText = localStorage.getItem('userName') || 'مستخدم';
+        async function loadData() {
+            const balRes = await fetch(`/api/balance?userId=${userId}`);
+            const bal = await balRes.json();
+            document.getElementById('balance').innerText = bal.balance;
+            const ordersRes = await fetch(`/api/orders?userId=${userId}`);
+            const orders = await ordersRes.json();
+            document.getElementById('orders-list').innerHTML = orders.map(o => `<div class="order-item">طلب ${o.id.slice(-6)}: ${o.status} - ${o.total} دولار</div>`).join('');
+            const alertsRes = await fetch('/api/alerts');
+            const alerts = await alertsRes.json();
+            document.getElementById('alerts-list').innerHTML = alerts.map(a => `<div class="alert-item">⚠️ ${a.message}</div>`).join('');
+        }
+        loadData();
+    </script>
+</body>
+</html>
