@@ -36,8 +36,7 @@
     </main>
     <script src="script.js"></script>
     <script>
-        // تحديد رابط الـ Worker (غيّره إلى رابط الـ Worker الحقيقي)
-        const WORKER_URL = 'https://gift-shop-api.aloby699.workers.dev';
+        const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
         async function loadNews() {
             const res = await fetch(`${WORKER_URL}/api/news`);
             const news = await res.json();
@@ -48,4 +47,4 @@
         checkAuth();
     </script>
 </body>
-</html>
+</html> 
