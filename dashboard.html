@@ -17,16 +17,17 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://gift-shop-api.aloby699.workers.dev';
         const userId = localStorage.getItem('userId');
         document.getElementById('userName').innerText = localStorage.getItem('userName') || 'مستخدم';
         async function loadData() {
-            const balRes = await fetch(`/api/balance?userId=${userId}`);
+            const balRes = await fetch(`${WORKER_URL}/api/balance?userId=${userId}`);
             const bal = await balRes.json();
             document.getElementById('balance').innerText = bal.balance;
-            const ordersRes = await fetch(`/api/orders?userId=${userId}`);
+            const ordersRes = await fetch(`${WORKER_URL}/api/orders?userId=${userId}`);
             const orders = await ordersRes.json();
             document.getElementById('orders-list').innerHTML = orders.map(o => `<div class="order-item">طلب ${o.id.slice(-6)}: ${o.status} - ${o.total} دولار</div>`).join('');
-            const alertsRes = await fetch('/api/alerts');
+            const alertsRes = await fetch(`${WORKER_URL}/api/alerts`);
             const alerts = await alertsRes.json();
             document.getElementById('alerts-list').innerHTML = alerts.map(a => `<div class="alert-item">⚠️ ${a.message}</div>`).join('');
         }
