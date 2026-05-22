@@ -1,0 +1,27 @@
+name = "gift-shop-api"
+main = "_worker.js"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "USERS_KV"
+id = "your-users-kv-id"
+
+[[kv_namespaces]]
+binding = "PRODUCTS_KV"
+id = "your-products-kv-id"
+
+[[kv_namespaces]]
+binding = "ORDERS_KV"
+id = "your-orders-kv-id"
+
+[[kv_namespaces]]
+binding = "DEPOSITS_KV"
+id = "your-deposits-kv-id"
+
+[[kv_namespaces]]
+binding = "NEWS_KV"
+id = "your-news-kv-id"
+
+[[kv_namespaces]]
+binding = "ALERTS_KV"
+id = "your-alerts-kv-id"
