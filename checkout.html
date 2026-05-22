@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إتمام الشراء</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>...</header>
+    <main>
+        <h2>إتمام الشراء</h2>
+        <form id="checkout-form">
+            <label>طريقة الدفع:</label>
+            <select id="paymentMethod">
+                <option value="balance">رصيد الموقع</option>
+                <option value="usdt">USDT (TRC20)</option>
+                <option value="trx">TRX (Tron)</option>
+                <option value="vodafone">فودافون كاش (يدوي)</option>
+                <option value="bank">تحويل بنكي (يدوي)</option>
+            </select>
+            <button type="submit">شراء الآن</button>
+        </form>
+        <div id="result"></div>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        const productId = new URLSearchParams(location.search).get('productId');
+        const userId = localStorage.getItem('userId');
+        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const res = await fetch('/api/order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId, quantity: 1, paymentMethod, userId })
+            });
+            const data = await res.json();
+            if (data.paymentUrl) window.location.href = data.paymentUrl;
+            else if (data.orderId) window.location.href = 'dashboard.html';
+            else document.getElementById('result').innerText = data.message || data.error;
+        });
+    </script>
+</body>
+</html>
