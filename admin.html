@@ -25,8 +25,9 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
         async function loadPendingDeposits() {
-            const res = await fetch('/api/admin/pending-deposits');
+            const res = await fetch(`${WORKER_URL}/api/admin/pending-deposits`);
             const deposits = await res.json();
             const container = document.getElementById('pending-deposits');
             container.innerHTML = deposits.map(d => `
@@ -39,26 +40,26 @@
             `).join('');
         }
         async function approveDeposit(id) {
-            await fetch('/api/admin/approve-deposit', { method: 'POST', body: JSON.stringify({ id }), headers: { 'Content-Type': 'application/json' } });
+            await fetch(`${WORKER_URL}/api/admin/approve-deposit`, { method: 'POST', body: JSON.stringify({ id }), headers: { 'Content-Type': 'application/json' } });
             loadPendingDeposits();
         }
         async function rejectDeposit(id) {
-            await fetch('/api/admin/reject-deposit', { method: 'POST', body: JSON.stringify({ id }), headers: { 'Content-Type': 'application/json' } });
+            await fetch(`${WORKER_URL}/api/admin/reject-deposit`, { method: 'POST', body: JSON.stringify({ id }), headers: { 'Content-Type': 'application/json' } });
             loadPendingDeposits();
         }
         document.getElementById('news-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('newsTitle').value;
-            await fetch('/api/admin/news', { method: 'POST', body: JSON.stringify({ title }), headers: { 'Content-Type': 'application/json' } });
+            await fetch(`${WORKER_URL}/api/admin/news`, { method: 'POST', body: JSON.stringify({ title }), headers: { 'Content-Type': 'application/json' } });
             alert('تمت الإضافة');
         });
         document.getElementById('alert-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const msg = document.getElementById('alertMsg').value;
-            await fetch('/api/admin/alert', { method: 'POST', body: JSON.stringify({ message: msg }), headers: { 'Content-Type': 'application/json' } });
+            await fetch(`${WORKER_URL}/api/admin/alert`, { method: 'POST', body: JSON.stringify({ message: msg }), headers: { 'Content-Type': 'application/json' } });
             alert('تمت الإضافة');
         });
         loadPendingDeposits();
     </script>
 </body>
-</html>
+</html> 
