@@ -26,6 +26,7 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
         const userId = localStorage.getItem('userId');
         const methodSelect = document.getElementById('depositMethod');
         const receiptDiv = document.getElementById('receipt-field');
@@ -37,7 +38,7 @@
             const amount = document.getElementById('amount').value;
             const paymentMethod = methodSelect.value;
             const receiptUrl = (paymentMethod !== 'usdt' && paymentMethod !== 'trx') ? document.getElementById('receiptUrl').value : null;
-            const res = await fetch('/api/deposit', {
+            const res = await fetch(`${WORKER_URL}/api/deposit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId, amount, paymentMethod, receiptUrl })
@@ -48,4 +49,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
