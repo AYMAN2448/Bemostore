@@ -26,25 +26,25 @@
             <p>Google Play, Steam, PUBG UC, Free Fire Diamonds</p>
             <button onclick="location.href='products.html'">تسوق الآن</button>
         </section>
-
         <section class="news-section">
             <h3>📢 آخر الأخبار والتنبيهات</h3>
             <div id="news-list"></div>
         </section>
-
         <div class="whatsapp-float">
             <a href="https://wa.me/1234567890?text=مرحباً، أحتاج مساعدة" target="_blank">💬 دردشة مع الأدمن</a>
         </div>
     </main>
     <script src="script.js"></script>
     <script>
-        loadNews();
+        // تحديد رابط الـ Worker (غيّره إلى رابط الـ Worker الحقيقي)
+        const WORKER_URL = 'https://gift-shop-api.aloby699.workers.dev';
         async function loadNews() {
-            const res = await fetch('/api/news');
+            const res = await fetch(`${WORKER_URL}/api/news`);
             const news = await res.json();
             const container = document.getElementById('news-list');
             container.innerHTML = news.map(n => `<div class="news-item">📌 ${n.title} - ${new Date(n.date).toLocaleDateString('ar-EG')}</div>`).join('');
         }
+        loadNews();
         checkAuth();
     </script>
 </body>
