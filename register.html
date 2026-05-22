@@ -2,12 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل حساب</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header><div class="container"><h1>تسجيل حساب جديد</h1></div></header>
+    <header>...</header>
     <main>
         <form id="register-form">
             <input type="text" id="name" placeholder="الاسم" required>
@@ -19,11 +18,12 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const res = await fetch('/api/register', {
+            const res = await fetch(`${WORKER_URL}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email })
@@ -39,4 +39,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
