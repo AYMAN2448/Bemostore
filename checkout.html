@@ -24,12 +24,13 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://gift-shop-api.aloby699.workers.dev';
         const productId = new URLSearchParams(location.search).get('productId');
         const userId = localStorage.getItem('userId');
         document.getElementById('checkout-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const paymentMethod = document.getElementById('paymentMethod').value;
-            const res = await fetch('/api/order', {
+            const res = await fetch(`${WORKER_URL}/api/order`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ productId, quantity: 1, paymentMethod, userId })
@@ -41,4 +42,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
