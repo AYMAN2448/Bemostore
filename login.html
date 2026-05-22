@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header><div class="container"><h1>تسجيل دخول</h1></div></header>
+    <header>...</header>
     <main>
         <form id="login-form">
             <input type="email" id="email" placeholder="البريد الإلكتروني" required>
@@ -17,10 +17,15 @@
     </main>
     <script src="script.js"></script>
     <script>
+        const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
-            const res = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+            const res = await fetch(`${WORKER_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
             const data = await res.json();
             if (data.userId) {
                 localStorage.setItem('userId', data.userId);
