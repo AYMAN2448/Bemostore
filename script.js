@@ -1,4 +1,5 @@
-// script.js
+const WORKER_URL = 'https://floral-glitter-b7b.aloby699.workers.dev';
+
 function checkAuth() {
     const userId = localStorage.getItem('userId');
     const infoDiv = document.getElementById('user-info');
