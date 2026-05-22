@@ -12,9 +12,9 @@
     </main>
     <script src="script.js"></script>
     <script>
-        loadProducts();
+        const WORKER_URL = 'https://gift-shop-api.aloby699.workers.dev';
         async function loadProducts() {
-            const res = await fetch('/api/products');
+            const res = await fetch(`${WORKER_URL}/api/products`);
             const products = await res.json();
             const container = document.getElementById('products-list');
             container.innerHTML = products.map(p => `
@@ -25,7 +25,10 @@
                 </div>
             `).join('');
         }
-        function buy(id) { window.location.href = `checkout.html?productId=${id}`; }
+        function buy(productId) {
+            window.location.href = `checkout.html?productId=${productId}`;
+        }
+        loadProducts();
     </script>
 </body>
 </html>
